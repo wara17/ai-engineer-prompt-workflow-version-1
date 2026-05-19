@@ -1,64 +1,61 @@
-# GitHub Copilot Instructions
+# AI Agent Operating Guide
 
-You are assisting with enterprise backend development in IntelliJ IDEA.
+This repository defines a lightweight AI-assisted engineering workflow for IntelliJ IDEA + GitHub Copilot.
 
-Follow the repository AI workflow in `.ai/agent.md`.
+The goal is not to let AI code freely.  
+The goal is to make AI behave like a careful engineering assistant.
 
-## Mandatory Behavior
+## Core Rules
 
-Before implementation:
+1. Analyze before coding.
+2. Separate observed behavior from inferred behavior.
+3. Normalize requirements before implementation.
+4. Create an implementation plan before changing code.
+5. Preserve backward compatibility unless explicitly approved.
+6. Review implementation against the requirement.
+7. Generate or update regression tests.
+8. Prefer small, reversible changes.
+9. Do not rewrite unrelated code.
+10. Do not silently change public APIs, database contracts, request/response formats, or existing behavior.
 
-1. Normalize the requirement.
-2. Analyze the current implementation.
-3. Separate observed behavior from inferred behavior.
-4. Create an implementation plan.
-5. Identify backward compatibility risks.
-6. Propose regression tests.
+## Default AI Workflow
 
-During implementation:
+For every feature, modification, or bug fix, follow this sequence:
 
-1. Make minimal changes.
-2. Preserve existing behavior unless explicitly changed.
-3. Avoid unrelated refactoring.
-4. Keep public contracts stable.
-5. Follow existing project style.
-6. Reuse existing services, DTOs, repositories, mappers, utilities, and exception patterns.
+1. Normalize requirement
+2. Analyze current behavior
+3. Create implementation plan
+4. Implement approved changes
+5. Review implementation
+6. Generate/update tests
 
-After implementation:
+## Required Response Style
 
-1. Review the implementation against the normalized requirement.
-2. List files changed.
-3. Explain compatibility impact.
-4. Generate or update unit/regression tests.
-5. Mention any remaining risks.
+When working with code, respond using this structure:
 
-## Spring Boot Guidance
+```md
+## Understanding
 
-- Keep controllers thin.
-- Put business logic in services.
-- Use transactions intentionally.
-- Avoid accessing lazy-loaded entities outside transaction boundaries.
-- Prefer constructor injection.
-- Validate input at boundaries.
-- Keep DTOs separate from entities.
-- Avoid leaking internal exceptions to API responses.
-- Do not change API contracts without explicit approval.
+## Observed Current Behavior
 
-## Testing Guidance
+## Inferred Behavior / Assumptions
 
-Prioritize:
+## Risk / Backward Compatibility Impact
 
-- Unit tests for service behavior
-- Controller tests for request/response compatibility
-- Repository tests only when query behavior is important
-- Regression tests for previously working behavior
-- Edge cases around nulls, invalid input, duplicates, permissions, and transaction rollback
+## Implementation Plan
 
-## Do Not
+## Files Likely to Change
 
-- Do not rewrite large files unnecessarily.
-- Do not change formatting across unrelated sections.
-- Do not introduce new frameworks without approval.
-- Do not remove existing tests.
-- Do not assume unclear requirements.
-- Do not claim behavior exists unless verified from code.
+## Test Plan
+
+## Questions / Approval Needed
+```
+
+## Important Constraint
+
+Do not start implementation until the implementation plan is accepted, unless the user explicitly says:
+
+- "implement now"
+- "apply the change"
+- "continue with coding"
+- "no need to ask approval"
